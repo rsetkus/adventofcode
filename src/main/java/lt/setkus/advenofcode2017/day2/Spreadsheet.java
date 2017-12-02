@@ -39,19 +39,18 @@ public class Spreadsheet {
     public int evenlyDivisibleSum() {
         int sum = 0;
         for (int i = 0; i < spreadSheet.length; i++) {
-            int[] row = spreadSheet[i];
-            sum += getDivisible(row);
+            sum += getDivisionResult(spreadSheet[i]);
         }
 
         return sum;
     }
 
-    private int getDivisible(int[] row) {
+    private int getDivisionResult(int[] row) {
         for (int i = 0; i < row.length; i++) {
             int current = row[i];
             for(int y = 0; y < row.length; y++) {
                 if (y != i) {
-                    if (row[y] > current && row[y] % current == 0) {
+                    if (canEvenlyDivide(row[y], current)) {
                         return row[y] / current;
                     }
                 }
@@ -59,6 +58,10 @@ public class Spreadsheet {
         }
 
         return 0;
+    }
+
+    private boolean canEvenlyDivide(int a, int b) {
+        return a > b && a % b == 0;
     }
 
     public static void main(String[] args) {
