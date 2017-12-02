@@ -24,11 +24,11 @@ public class Captcha {
             "979594258458831457363238182251293118459972149876634333756896217466656291872525116439693152833162692" +
             "22835744532431378945137649959158495714472963839397214332815241141327714672141875129895";
 
-    int captureHalfWayRound(String s) {
+    public int captureHalfWayRound(String s) {
         return computeAnswer(s, s.toCharArray().length / 2);
     }
 
-    int capture(String input) {
+    public int capture(String input) {
         return computeAnswer(input, 1);
     }
 
