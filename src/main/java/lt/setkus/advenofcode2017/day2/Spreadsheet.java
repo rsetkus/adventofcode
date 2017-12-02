@@ -4,11 +4,15 @@ import java.util.Arrays;
 
 public class Spreadsheet {
 
+    private boolean ENABLE_MATRIX_PRINT = false;
+
     private final int[][] spreadSheet;
 
     public Spreadsheet(int[][] spreadSheet) {
         this.spreadSheet = spreadSheet;
-        printSpreadsheet(spreadSheet);
+        if (ENABLE_MATRIX_PRINT) {
+            printSpreadsheet(spreadSheet);
+        }
     }
 
     private void printSpreadsheet(int[][] spreadSheet) {
@@ -32,6 +36,31 @@ public class Spreadsheet {
         return checkSum;
     }
 
+    public int evenlyDivisibleSum() {
+        int sum = 0;
+        for (int i = 0; i < spreadSheet.length; i++) {
+            int[] row = spreadSheet[i];
+            sum += getDivisible(row);
+        }
+
+        return sum;
+    }
+
+    private int getDivisible(int[] row) {
+        for (int i = 0; i < row.length; i++) {
+            int current = row[i];
+            for(int y = 0; y < row.length; y++) {
+                if (y != i) {
+                    if (row[y] > current && row[y] % current == 0) {
+                        return row[y] / current;
+                    }
+                }
+            }
+        }
+
+        return 0;
+    }
+
     public static void main(String[] args) {
         int[][] spreadSheetMatrix = {
                 {3093, 749, 3469, 142, 2049, 3537, 1596, 3035, 2424, 3982, 3290, 125, 249, 131, 118, 3138},
@@ -53,6 +82,10 @@ public class Spreadsheet {
         };
 
         Spreadsheet spreadsheet = new Spreadsheet(spreadSheetMatrix);
-        System.out.printf("Spreadsheet check sum is %d", spreadsheet.checkSum());
+        System.out.printf(
+                "Spreadsheet results: sum = %d, divisible sum = %d.",
+                spreadsheet.checkSum(),
+                spreadsheet.evenlyDivisibleSum()
+        );
     }
 }
