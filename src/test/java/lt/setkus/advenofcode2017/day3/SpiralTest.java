@@ -21,4 +21,9 @@ public class SpiralTest {
         assertEquals(2, spiral.manhattanDistanceFrom(23));
         assertEquals(31, spiral.manhattanDistanceFrom(1024));
     }
+
+    @Test
+    public void whenGivenAdjacentSquaresSumGridAndInputValue_ThenShouldReturnFirstLargerValue() {
+        assertEquals(4, spiral.nextLargerValue(2));
+    }
 }

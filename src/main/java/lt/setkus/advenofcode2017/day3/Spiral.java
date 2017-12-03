@@ -17,12 +17,9 @@ public class Spiral {
         matrix = new int[dimension][dimension];
         centerX = centerY = dimension / 2;
         max = matrix.length * matrix.length;
-
-        prepareCenter();
-        spin();
     }
 
-    private void spin() {
+    private void spin(SpinStrategy spinStrategy) {
         int x = centerX;
         int y = centerY;
 
@@ -31,34 +28,38 @@ public class Spiral {
 
         int fillLength = 2;
 
-        int digit = 2;
-        while (digit < max) {
+        int visited = 1;
+        while (visited < max) {
             y++;
             nx--;
 
             // east
             int ey = y;
             for (int e = 0; e < fillLength; e++) {
-                updateGrid(x - e, ey, digit++);
+                visited++;
+                updateGrid(x - e, ey, spinStrategy.getNextDigit(x - e, ey));
             }
 
             // north
             int ny = y - 1;
             for (int n = 0; n < fillLength; n++) {
-                updateGrid(nx, ny, digit++);
+                visited++;
+                updateGrid(nx, ny, spinStrategy.getNextDigit(nx, ny));
             }
 
             // west
             int wy = y - fillLength;
             int wx = nx + 1;
             for (int w = 0; w < fillLength; w++) {
-                updateGrid(wx + w, wy, digit++);
+                visited++;
+                updateGrid(wx + w, wy, spinStrategy.getNextDigit(wx + w, wy));
             }
 
             // south
             int sx = x + 1;
             for(int s = 0; s < fillLength; s++) {
-                updateGrid(sx, sy + s, digit++);
+                visited++;
+                updateGrid(sx, sy + s, spinStrategy.getNextDigit(sx, sy + s));
             }
 
             x++;
@@ -93,12 +94,19 @@ public class Spiral {
     }
 
     public int manhattanDistanceFrom(int fromDigit) {
+        prepareCenter();
+        spin(new IncrementalStrategy());
+
         Point point = mapOfDigits.getOrDefault(fromDigit, new Point());
         return distance(point);
     }
 
     private int distance(Point point) {
         return Math.abs(centerX - point.x) + Math.abs(centerY - point.y);
+    }
+
+    public int nextLargerValue(int input) {
+        return 0;
     }
 
     static class Point {
