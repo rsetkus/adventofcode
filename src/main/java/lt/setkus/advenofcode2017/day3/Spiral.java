@@ -1,7 +1,5 @@
 package lt.setkus.advenofcode2017.day3;
 
-import lt.setkus.advenofcode2017.Util;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
