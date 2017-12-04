@@ -1,5 +1,7 @@
 package lt.setkus.advenofcode2017.day3;
 
+import lt.setkus.advenofcode2017.Util;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,53 +21,136 @@ public class Spiral {
         max = matrix.length * matrix.length;
     }
 
-    private void spin(SpinStrategy spinStrategy) {
+    private void spin() {
         int x = centerX;
         int y = centerY;
 
-        int nx = centerX;
-        int sy = centerY;
+        int northX = centerX;
+        int southY = centerY;
+
+        int fillLength = 2;
+
+        int nextDigitToInsert = 2;
+        while (nextDigitToInsert < max) {
+            y++;
+            northX--;
+
+            // east
+            int ey = y;
+            for (int e = 0; e < fillLength; e++) {
+                updateGrid(x - e, ey, nextDigitToInsert++);
+            }
+
+            // north
+            int ny = y - 1;
+            for (int n = 0; n < fillLength; n++) {
+                updateGrid(northX, ny - n, nextDigitToInsert++);
+            }
+
+            // west
+            int wy = y - fillLength;
+            int wx = northX + 1;
+            for (int w = 0; w < fillLength; w++) {
+                updateGrid(wx + w, wy, nextDigitToInsert++);
+            }
+
+            // south
+            int sx = x + 1;
+            for(int s = 0; s < fillLength; s++) {
+                updateGrid(sx, southY + s, nextDigitToInsert++);
+            }
+
+            x++;
+            southY--;
+            fillLength += 2;
+        }
+    }
+
+    private int findFirstLagerValue(int input) {
+        int x = centerX;
+        int y = centerY;
+
+        int northX = centerX;
+        int southY = centerY;
 
         int fillLength = 2;
 
         int visited = 1;
+        int digit;
         while (visited < max) {
             y++;
-            nx--;
+            northX--;
 
             // east
             int ey = y;
             for (int e = 0; e < fillLength; e++) {
                 visited++;
-                updateGrid(x - e, ey, spinStrategy.getNextDigit(x - e, ey));
+                digit = getNextDigit(x - e, ey);
+                if (digit > input) {
+                    return digit;
+                }
+                addToMatrix(x - e, ey, digit);
             }
 
             // north
             int ny = y - 1;
             for (int n = 0; n < fillLength; n++) {
                 visited++;
-                updateGrid(nx, ny, spinStrategy.getNextDigit(nx, ny));
+                digit = getNextDigit(northX, ny);
+                if (digit > input) {
+                    return digit;
+                }
+                addToMatrix(northX, ny, digit);
             }
 
             // west
             int wy = y - fillLength;
-            int wx = nx + 1;
+            int wx = northX + 1;
             for (int w = 0; w < fillLength; w++) {
                 visited++;
-                updateGrid(wx + w, wy, spinStrategy.getNextDigit(wx + w, wy));
+                digit = getNextDigit(wx + w, wy);
+                if (digit > input) {
+                    return digit;
+                }
+                addToMatrix(wx + w, wy, digit);
             }
 
             // south
             int sx = x + 1;
             for(int s = 0; s < fillLength; s++) {
                 visited++;
-                updateGrid(sx, sy + s, spinStrategy.getNextDigit(sx, sy + s));
+                digit = getNextDigit(sx, southY + s);
+                if (digit > input) {
+                    return digit;
+                }
+                addToMatrix(sx, southY + s, digit);
             }
 
             x++;
-            sy--;
+            southY--;
             fillLength += 2;
         }
+
+        return 0;
+    }
+
+    public int getNextDigit(int x, int y) {
+        System.out.println(String.format("x: %d, y: %d", x, y));
+        int sum = 0;
+        for (int y1 = y - 1; y1 < y + 1; y1++) {
+            for(int x1 = x - 1; x1 < x + 1; x1++) {
+                try {
+                    if (x1 == x && y1 == y) {
+                        continue;
+                    }
+                    sum += matrix[x1][y1];
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.err.printf("non existing element at x: %d, y: %d.\n", x1, y1);
+                }
+            }
+        }
+        Util.printMatrix(matrix);
+        return sum;
     }
 
     private void updateGrid(int x, int y, int digit) {
@@ -95,8 +180,7 @@ public class Spiral {
 
     public int manhattanDistanceFrom(int fromDigit) {
         prepareCenter();
-        spin(new IncrementalStrategy());
-
+        spin();
         Point point = mapOfDigits.getOrDefault(fromDigit, new Point());
         return distance(point);
     }
@@ -106,7 +190,8 @@ public class Spiral {
     }
 
     public int nextLargerValue(int input) {
-        return 0;
+        prepareCenter();
+        return findFirstLagerValue(input);
     }
 
     static class Point {

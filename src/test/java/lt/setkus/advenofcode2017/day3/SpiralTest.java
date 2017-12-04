@@ -1,22 +1,14 @@
 package lt.setkus.advenofcode2017.day3;
 
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class SpiralTest {
 
-    public Spiral spiral;
-
-    @Before
-    public void setUp() {
-        spiral = new Spiral(270000);
-    }
-
     @Test
     public void whenGivenEntryDigit_ThenShouldCalculateShortestStepsToStart() {
+        Spiral spiral = new Spiral(270000);
         assertEquals(0, spiral.manhattanDistanceFrom(1));
         assertEquals(3, spiral.manhattanDistanceFrom(12));
         assertEquals(2, spiral.manhattanDistanceFrom(23));
@@ -24,8 +16,8 @@ public class SpiralTest {
     }
 
     @Test
-    @Ignore("pausing TDD")
     public void whenGivenAdjacentSquaresSumGridAndInputValue_ThenShouldReturnFirstLargerValue() {
+        Spiral spiral = new Spiral(25);
         assertEquals(4, spiral.nextLargerValue(2));
     }
 }
