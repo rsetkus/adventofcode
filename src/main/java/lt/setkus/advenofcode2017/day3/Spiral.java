@@ -2,6 +2,7 @@ package lt.setkus.advenofcode2017.day3;
 
 import lt.setkus.advenofcode2017.Util;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -96,11 +97,11 @@ public class Spiral {
             int ny = y - 1;
             for (int n = 0; n < fillLength; n++) {
                 visited++;
-                digit = getNextDigit(northX, ny);
+                digit = getNextDigit(northX, ny - n);
                 if (digit > input) {
                     return digit;
                 }
-                addToMatrix(northX, ny, digit);
+                addToMatrix(northX, ny - n, digit);
             }
 
             // west
@@ -135,10 +136,9 @@ public class Spiral {
     }
 
     public int getNextDigit(int x, int y) {
-        System.out.println(String.format("x: %d, y: %d", x, y));
         int sum = 0;
-        for (int y1 = y - 1; y1 < y + 1; y1++) {
-            for(int x1 = x - 1; x1 < x + 1; x1++) {
+        for (int y1 = y - 1; y1 <= y + 1; y1++) {
+            for(int x1 = x - 1; x1 <= x + 1; x1++) {
                 try {
                     if (x1 == x && y1 == y) {
                         continue;
@@ -149,7 +149,6 @@ public class Spiral {
                 }
             }
         }
-        Util.printMatrix(matrix);
         return sum;
     }
 
@@ -190,8 +189,15 @@ public class Spiral {
     }
 
     public int nextLargerValue(int input) {
+        clearMatrix();
         prepareCenter();
         return findFirstLagerValue(input);
+    }
+
+    private void clearMatrix() {
+        for (int[] row : matrix) {
+            Arrays.fill(row, 0);
+        }
     }
 
     static class Point {
@@ -201,6 +207,7 @@ public class Spiral {
 
     public static void main(String[] args) {
         Spiral spiral = new Spiral(270000);
-        System.out.printf("Data %d from square is %d steps away.", 265149, spiral.manhattanDistanceFrom(265149));
+        System.out.printf("Data %d from square is %d steps away.\n", 265149, spiral.manhattanDistanceFrom(265149));
+        System.out.printf("Next first lager value of %d is %d", 265149, spiral.nextLargerValue(265149));
     }
 }

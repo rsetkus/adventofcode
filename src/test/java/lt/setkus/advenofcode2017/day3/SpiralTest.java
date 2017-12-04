@@ -19,5 +19,6 @@ public class SpiralTest {
     public void whenGivenAdjacentSquaresSumGridAndInputValue_ThenShouldReturnFirstLargerValue() {
         Spiral spiral = new Spiral(25);
         assertEquals(4, spiral.nextLargerValue(2));
+        assertEquals(10, spiral.nextLargerValue(5));
     }
 }
