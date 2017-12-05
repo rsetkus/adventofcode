@@ -6,13 +6,33 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.function.ToIntFunction;
 import java.util.stream.Stream;
 
 public class Passphrase {
-    public static boolean isValidPassphrase(String input) {
+
+    private static ToIntFunction<char[]> toProductOfChars = chars -> {
+        int sum = 1;
+        for (char c : chars) {
+            sum *= c;
+        }
+        return sum;
+    };
+
+    public static boolean simpleValidation(String input) {
         String[] elements = input.split(" ");
         long numberOfDistinctElements = Arrays.stream(elements).distinct().count();
         return elements.length == numberOfDistinctElements;
+    }
+
+    public static boolean enhancedValidation(String input) {
+        String[] elements = input.split(" ");
+        long numberOfUniqueElements = Arrays.stream(elements)
+                .map(String::toCharArray)
+                .mapToInt(toProductOfChars)
+                .distinct()
+                .count();
+        return elements.length == numberOfUniqueElements;
     }
 
     public static void main(String[] args) {
@@ -20,11 +40,20 @@ public class Passphrase {
 
         try (Stream<String> stringStream = Files.lines(Paths.get(URI.create(url.toString())))) {
             long numberOfValidPassphrases = stringStream
-                    .peek(System.out::println)
-                    .filter(Passphrase::isValidPassphrase)
+                    .filter(Passphrase::simpleValidation)
                     .count();
 
-            System.out.printf("Found %d valid passphrases.", numberOfValidPassphrases);
+            System.out.printf("Found %d valid passphrases.\n", numberOfValidPassphrases);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (Stream<String> stringStream = Files.lines(Paths.get(URI.create(url.toString())))) {
+            long numberAnagramsExcluded = stringStream
+                    .filter(Passphrase::enhancedValidation)
+                    .count();
+
+            System.out.printf("Found %d valid passphrases with enhanced security.", numberAnagramsExcluded);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -9,11 +9,23 @@ public class PassphraseTest {
 
     @Test
     public void whenInputConsistsFromOnlyUniqueValues_ThenShouldReturnTrue() throws Exception {
-        assertTrue(Passphrase.isValidPassphrase("aaa bbb aa bb"));
+        assertTrue(Passphrase.simpleValidation("aaa bbb aa bb"));
     }
 
     @Test
     public void whenInputHasRepetitiveValues_ThenShouldReturnFalse() throws Exception {
-        assertFalse(Passphrase.isValidPassphrase("aa bb cc dd aa"));
+        assertFalse(Passphrase.simpleValidation("aa bb cc dd aa"));
+    }
+
+    @Test
+    public void whenInputConsistsOfTwoWOrdsWhichAreAnagrams_ThenShouldReturnFalse() throws Exception {
+        assertFalse(Passphrase.enhancedValidation("abcde xyz ecdab"));
+        assertFalse(Passphrase.enhancedValidation("oiii ioii iioi iiio"));
+    }
+
+    @Test
+    public void whenInputIsPureOfUniqueWords_ThenShouldReturnTrue() throws Exception {
+        assertTrue(Passphrase.enhancedValidation("a ab abc abd abf abj"));
+        assertTrue(Passphrase.enhancedValidation("iiii oiii ooii oooi oooo"));
     }
 }
