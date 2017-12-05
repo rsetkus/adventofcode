@@ -12,11 +12,11 @@ import java.util.stream.Stream;
 public class Passphrase {
 
     private static ToIntFunction<char[]> toProductOfChars = chars -> {
-        int sum = 1;
+        int product = 1;
         for (char c : chars) {
-            sum *= c;
+            product *= c;
         }
-        return sum;
+        return product;
     };
 
     public static boolean simpleValidation(String input) {
@@ -36,7 +36,7 @@ public class Passphrase {
     }
 
     public static void main(String[] args) {
-        URL url = Passphrase.class.getClassLoader().getResource("input1.txt");
+        URL url = Passphrase.class.getClassLoader().getResource("day4/input1.txt");
 
         try (Stream<String> stringStream = Files.lines(Paths.get(URI.create(url.toString())))) {
             long numberOfValidPassphrases = stringStream
