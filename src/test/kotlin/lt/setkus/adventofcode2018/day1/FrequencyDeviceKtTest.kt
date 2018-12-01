@@ -24,6 +24,6 @@ class FrequencyDeviceKtTest {
         assertEquals(0, duplicateFrequencyResult(arrayOf(+1, -1)))
         assertEquals(10, duplicateFrequencyResult(arrayOf(+3, +3, +4, -2, -4)))
         assertEquals(14, duplicateFrequencyResult(arrayOf(+7, +7, -2, -7, -4)))
-        assertEquals(0, duplicateFrequencyResult(mutableListOf<Int>().loadFromFile("2018/day1/input2").toTypedArray()))
+        assertEquals(245, duplicateFrequencyResult(mutableListOf<Int>().loadFromFile("2018/day1/input2").toTypedArray()))
     }
 }
