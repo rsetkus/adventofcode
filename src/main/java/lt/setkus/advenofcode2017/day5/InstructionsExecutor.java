@@ -41,7 +41,7 @@ public class InstructionsExecutor {
     }
 
     public static void main(String[] args) {
-        URL url = Passphrase.class.getClassLoader().getResource("day5/input1.txt");
+        URL url = Passphrase.class.getClassLoader().getResource("2017/day5/input1.txt");
 
         try (Stream<String> stringStream = Files.lines(Paths.get(URI.create(url.toString())))) {
             List<Integer> instructions = stringStream.map(Integer::valueOf).collect(toList());

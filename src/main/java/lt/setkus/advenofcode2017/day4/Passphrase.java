@@ -36,7 +36,7 @@ public class Passphrase {
     }
 
     public static void main(String[] args) {
-        URL url = Passphrase.class.getClassLoader().getResource("day4/input1.txt");
+        URL url = Passphrase.class.getClassLoader().getResource("2017/day4/input1.txt");
 
         try (Stream<String> stringStream = Files.lines(Paths.get(URI.create(url.toString())))) {
             long numberOfValidPassphrases = stringStream
