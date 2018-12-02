@@ -12,4 +12,10 @@ class BoxIdCheckSumKtTest {
         assertEquals(12, checkSum(listOf("abcdef", "bababc", "abbcde", "abcccd", "aabcdd", "abcdee", "ababab")))
         assertEquals(5727, checkSum(File("2018/day2/input1").readFileToList()))
     }
+
+    @Test
+    fun testCommonLettersBetweenIds() {
+        assertEquals("fgij", findCommonLetters(listOf("abcde", "fghij", "klmno", "pqrst", "fguij", "axcye", "wvxyz")))
+        assertEquals("uwfmdjxyxlbgnrotcfpvswaqh", findCommonLetters(File("2018/day2/input1").readFileToList()))
+    }
 }

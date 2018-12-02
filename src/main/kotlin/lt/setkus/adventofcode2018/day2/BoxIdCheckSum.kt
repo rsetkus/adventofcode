@@ -14,3 +14,30 @@ fun checkSum(input: List<String>): Int {
 
     return checkSum
 }
+
+fun findCommonLetters(input: List<String>): String {
+    var result = ""
+     run loop@{
+         input.forEach { outerIt ->
+             input.forEach {
+                 if (outerIt != it) {
+                     val count = outerIt.zip(it).count {
+                         it.first == it.second
+                     }
+
+                     if (outerIt.length - count == 1) {
+                         outerIt.zip(it).forEach {
+                             if (it.first == it.second) {
+                                 result += it.first
+                             }
+                         }
+
+                         return@loop
+                     }
+                 }
+             }
+         }
+     }
+
+    return result
+}
