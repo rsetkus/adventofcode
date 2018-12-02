@@ -6,3 +6,8 @@ fun MutableList<Int>.loadFromFile(path: String): MutableList<Int> {
     val file = this::javaClass.javaClass.classLoader.getResource(path).file
     return File(file).useLines { it.toList() }.map { it.toInt() }.toMutableList()
 }
+
+fun File.readFileToList(): MutableList<String> {
+    val file = this::javaClass.javaClass.classLoader.getResource(path).file
+    return File(file).useLines { it.toMutableList() }
+}
