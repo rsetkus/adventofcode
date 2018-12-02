@@ -10,6 +10,6 @@ class BoxIdCheckSumKtTest {
     @Test
     fun testCheckSum() {
         assertEquals(12, checkSum(listOf("abcdef", "bababc", "abbcde", "abcccd", "aabcdd", "abcdee", "ababab")))
-        assertEquals(416, checkSum(File("2018/day2/input1").readFileToList()))
+        assertEquals(5727, checkSum(File("2018/day2/input1").readFileToList()))
     }
 }

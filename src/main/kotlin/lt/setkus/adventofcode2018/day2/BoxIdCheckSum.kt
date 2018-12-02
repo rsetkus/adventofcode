@@ -3,11 +3,8 @@ package lt.setkus.adventofcode2018.day2
 fun checkSum(input: List<String>): Int {
     val checkSum = input.asSequence()
             .map { it.asSequence().groupingBy { it }.eachCount() }
-            .map {
-                it.values.distinct()
-            }
             .flatMap {
-                it.asSequence()
+                it.values.distinct().asSequence()
             }
             .filter { it == 2 || it == 3 }
             .groupBy { it }
