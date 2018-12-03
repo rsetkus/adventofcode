@@ -11,3 +11,12 @@ fun File.readFileToList(): MutableList<String> {
     val file = this::javaClass.javaClass.classLoader.getResource(path).file
     return File(file).useLines { it.toMutableList() }
 }
+
+fun Array<IntArray>.printMatrix() {
+    for (row in 0 until this.size) {
+        for (column in 0 until this[row].size) {
+            print(" ${this[row][column]} ")
+        }
+        println()
+    }
+}
