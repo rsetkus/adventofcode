@@ -31,23 +31,28 @@ class Day3(val input: List<String>) {
     }
 
     fun findNonOverlappingId(): Int {
-        var claimId = -1;
+        var claimId = -1
         drawClaims()
         input.map { mapToClaim(it) }.forEach {
-            var area = 0
-            for (row in 0 until it.width) {
-                for (column in 0 until it.height) {
-                    area += fabric[it.deltaX + row][it.deltaY + column]
-                }
-
-                if (area == it.height * it.width) {
-                    claimId = it.id
-                    return@forEach
-                }
+            val area = calculateArea(it)
+            if (area == it.height * it.width) {
+                claimId = it.id
+                return@forEach
             }
         }
 
         return claimId
+    }
+
+    private fun calculateArea(it: Claim): Int {
+        var area = 0
+        for (row in 0 until it.width) {
+            for (column in 0 until it.height) {
+                area += fabric[it.deltaX + row][it.deltaY + column]
+            }
+        }
+
+        return area
     }
 
     private fun drawOnFabric(fabric: Array<IntArray>, claim: Claim) {
