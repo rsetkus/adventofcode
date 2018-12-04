@@ -15,7 +15,7 @@ fun File.readFileToList(): MutableList<String> {
 fun Array<IntArray>.printMatrix() {
     for (row in 0 until this.size) {
         for (column in 0 until this[row].size) {
-            print(" ${this[row][column]} ")
+            print(" ${if(this[row][column] > 1) "X" else this[row][column]} ")
         }
         println()
     }

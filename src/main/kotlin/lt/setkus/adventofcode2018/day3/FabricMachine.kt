@@ -1,13 +1,12 @@
 package lt.setkus.adventofcode2018.day3
 
-
-private val fabric = Array(1000) {
-    IntArray(1000)
-}
-
 fun calculateOverlap(input: List<String>): Int {
+    val fabric = Array(1000) {
+        IntArray(1000)
+    }
+
     input.map { mapInputToDrawingPair(it) }.forEach {
-        drawOnFabric(it)
+        drawOnFabric(fabric, it)
     }
     return fabric.asSequence().flatMap { it.asSequence() }.filter { it > 1 }.count()
 }
@@ -16,7 +15,7 @@ val mapInputToDrawingPair = { input: String ->
     Pair(input.getDeltaXY(), input.getWidthAndHeight())
 }
 
-private fun drawOnFabric(params: Pair<Pair<Int, Int>, Pair<Int, Int>>) {
+private fun drawOnFabric(fabric: Array<IntArray>, params: Pair<Pair<Int, Int>, Pair<Int, Int>>) {
     val deltaX = params.first.first
     val deltaY = params.first.second
 
