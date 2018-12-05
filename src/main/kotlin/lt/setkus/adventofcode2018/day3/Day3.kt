@@ -15,7 +15,7 @@ class Day3(val input: List<String>) {
             val (id, dx, dy, w, h) = match.destructured
             Claim(id.toInt(), dx.toInt(), dy.toInt(), w.toInt(), h.toInt())
         } else {
-            throw IllegalArgumentException("Cannot parse $input input")
+            throw IllegalArgumentException("Cannot parse $input input1")
         }
     }
 

@@ -5,7 +5,7 @@ import lt.setkus.adventofcode2018.readFileToList
 import org.junit.Test
 import java.io.File
 
-class FabricMachineKtTest {
+class Day3Test {
 
     @Test
     fun testOverlap() {
