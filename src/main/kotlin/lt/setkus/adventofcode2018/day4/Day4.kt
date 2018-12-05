@@ -17,6 +17,7 @@ data class Record(
 )
 
 data class GuardReport(val guardId: Int, val totalMinutes: Int, val mostMinuteAsleep: Int)
+data class TimeReport(val guardId: Int, val frequentMinute: Int, val timesOfAppearance: Int)
 
 class Day4(val records: List<String>) {
 
@@ -56,8 +57,20 @@ class Day4(val records: List<String>) {
         } ?: -1
     }
 
-    fun findGuard(): Int {
-        val report = records
+    private val mapToTimeReport: (List<Record>) -> TimeReport = {
+        val periods  = it.partition { it.event is Asleep }
+        val mostAsleepMinute = findMostMinuteAsleep(periods)
+        TimeReport(it.first().guardId, mostAsleepMinute, calculateHowManyTimesFallAsleep(mostAsleepMinute, periods))
+    }
+
+    private val calculateHowManyTimesFallAsleep: (Int, Pair<List<Record>, List<Record>>) -> Int = { minute, periods ->
+        periods.first.zip(periods.second).count {
+            minute in (it.first.minute..it.second.minute)
+        }
+    }
+
+    fun strategyOne(): Int {
+        val sleeper = records
                 .sorted()
                 .map { mapToRecord(it) }
                 .filter { it.event !is ShiftChange }
@@ -69,7 +82,25 @@ class Day4(val records: List<String>) {
                     it.totalMinutes
                 }.first()
 
-        return report.guardId * report.mostMinuteAsleep
+        return sleeper.guardId * sleeper.mostMinuteAsleep
+    }
+
+    fun strategyTwo(): Int {
+        val laziestGuard = records
+                .sorted()
+                .map {
+                    mapToRecord(it)
+                }
+                .filter { it.event !is ShiftChange }
+                .groupBy {
+                    it.guardId
+                }.map {
+                    mapToTimeReport(it.value)
+                }.sortedByDescending {
+                    it.timesOfAppearance
+                }.first()
+
+        return laziestGuard.guardId * laziestGuard.frequentMinute
     }
 }
 

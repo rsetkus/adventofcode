@@ -23,6 +23,6 @@ class Day3Test {
     @Test
     fun testNonOverlappingInput() {
         val day3 = Day3(File("2018/day3/input2").readFileToList())
-        assertEquals(3, day3.findNonOverlappingId())
+        assertEquals(445, day3.findNonOverlappingId())
     }
 }
