@@ -4,19 +4,20 @@ import kotlin.math.absoluteValue
 
 private const val CAPITAL_AND_LOWER_CHAR_DIF = 32
 
-class Day5(var polymer: String) {
+class Day5(private val polymer: String) {
 
-    fun removeOppositePolarity() = analyze(polymer)
-
-    fun analyze(input: String): String {
-        var collector = input
-        input.forEachIndexed { index, c ->
-            val isOpposite = input.isPolarityOppositeAt(index)
-            if (isOpposite) {
-                val removed = input.removeRange(index, index + 2)
-                collector = analyze(removed)
+    fun removeOppositePolarity(): String {
+        var collector = polymer
+        do {
+            val lengthBefore = collector.length
+            for (index in 0 until collector.length) {
+                val isOpposite = collector.isPolarityOppositeAt(index)
+                if (isOpposite) {
+                    collector = collector.removeRange(index, index + 2)
+                    break
+                }
             }
-        }
+        } while (collector.length < lengthBefore)
 
         return collector
     }
