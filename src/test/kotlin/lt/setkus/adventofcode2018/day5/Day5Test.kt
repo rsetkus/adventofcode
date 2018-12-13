@@ -16,4 +16,14 @@ class Day5Test {
     fun testInputPolymerAdjancent() {
         assertEquals(11118, Day5(File("2018/day5/input1").readFileToList().first()).removeOppositePolarity().length)
     }
+
+    @Test
+    fun testExamplePolymerLeastLength() {
+        assertEquals(4, Day5("dabAcCaCBAcCcaDA").leastLength())
+    }
+
+    @Test
+    fun testInputPolymerLeastLength() {
+        assertEquals(6948, Day5(File("2018/day5/input1").readFileToList().first()).leastLength())
+    }
 }
