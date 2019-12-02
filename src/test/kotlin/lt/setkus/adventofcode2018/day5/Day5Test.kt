@@ -1,7 +1,7 @@
 package lt.setkus.adventofcode2018.day5
 
 import junit.framework.TestCase.assertEquals
-import lt.setkus.adventofcode2018.readFileToList
+import lt.setkus.readFileToList
 import org.junit.Test
 import java.io.File
 

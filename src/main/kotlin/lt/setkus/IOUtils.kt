@@ -1,4 +1,4 @@
-package lt.setkus.adventofcode2018
+package lt.setkus
 
 import java.io.File
 

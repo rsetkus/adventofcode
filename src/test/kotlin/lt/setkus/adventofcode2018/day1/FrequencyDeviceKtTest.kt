@@ -1,7 +1,7 @@
 package lt.setkus.adventofcode2018.day1
 
 import junit.framework.Assert.assertEquals
-import lt.setkus.adventofcode2018.loadFromFile
+import lt.setkus.loadFromFile
 import org.junit.Test
 
 class FrequencyDeviceKtTest {
